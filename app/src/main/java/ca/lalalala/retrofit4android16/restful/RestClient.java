@@ -3,6 +3,10 @@ package ca.lalalala.retrofit4android16.restful;
 
 import org.json.JSONObject;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
@@ -19,18 +23,18 @@ public class RestClient {
         Call<JSONObject> getHistory();
     }
 
-//    static OkHttpClient client = new OkHttpClient.Builder()
-//            .sslSocketFactory(new NoSSLv3SocketFactory())
-//            .hostnameVerifier(new HostnameVerifier() {
-//                @Override
-//                public boolean verify(String hostname, SSLSession session) {
-//                    return true;
-//                }
-//            })
-//            .build();
+    static OkHttpClient client = new OkHttpClient.Builder()
+            .sslSocketFactory(new NoSSLv3SocketFactory())
+            .hostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            })
+            .build();
 
     static Retrofit retrofit = new Retrofit.Builder()
-//            .client(client)
+            .client(client)
             .baseUrl(BASE_URL)
             .addConverterFactory(JsonConverterFactory.create())
             .build();
